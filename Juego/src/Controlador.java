@@ -13,9 +13,9 @@ public class Controlador {
         this.vista = vista;
         this.mazo = generarMazo();
         this.jugadores = new ArrayList<>();
-        Collections.shuffle(mazo);
+        Collections.shuffle(mazo);//El suffel sirve para mezclar las cartas
     }
-
+//Aqui nos crea las cartas
     private List<Carta> generarMazo() {
         List<Carta> nuevoMazo = new ArrayList<>();
         String[] colores = {"Rojo", "Azul", "Verde", "Amarillo"};
@@ -32,18 +32,18 @@ public class Controlador {
         jugadores.add(new Jugador("Jugador 1"));
         jugadores.add(new Jugador("Jugador 2"));
 
-        // Repartir 7 cartas
+        // Esto nos reparte las 7 cartas
         for (Jugador j : jugadores) {
             for (int i = 0; i < 7; i++) j.recibirCarta(mazo.remove(0));
         }
 
         cartaEnMesa = mazo.remove(0);
-
+//Esto es lo que genera el bucle hasta que alguien gana
         while (true) {
             Jugador actual = jugadores.get(turnoActual);
             vista.mostrarEstado(actual.getNombre(), cartaEnMesa, actual.getMano());
             int opc = vista.pedirOpcion();
-
+//Interfaz
             if (opc == 99) {
                 actual.recibirCarta(mazo.remove(0));
             } else if (opc >= 0 && opc < actual.getMano().size()) {
@@ -55,14 +55,14 @@ public class Controlador {
                         break;
                     }
                 } else {
-                    vista.mostrarMensaje("¡Movimiento no válido!");
+                    vista.mostrarMensaje("No puedes hacer eso");
                     continue;
                 }
             }
             turnoActual = (turnoActual + 1) % jugadores.size();
         }
     }
-
+//Aqui se hace la validación para que coincida en el juego
     private boolean validarJugada(Carta elegida) {
         return elegida.getColor().equals(cartaEnMesa.getColor()) ||
                 elegida.getValor().equals(cartaEnMesa.getValor());

@@ -4,11 +4,11 @@ public class Carta {
 
     public Carta(String color, String valor) {
         this.color = color;
-        this.valor = valor;
+        this.valor = valor;//Constructores
     }
 
     public String getColor() { return color; }
-    public String getValor() { return valor; }
+    public String getValor() { return valor; }//Getters
 
     @Override
     public String toString() {
